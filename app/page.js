@@ -16,6 +16,7 @@ export default function Home() {
           src="/home.jpg"
           alt="Placeholder"
           fill
+          loading="eager"
           className="object-cover rounded"
         />
         <div

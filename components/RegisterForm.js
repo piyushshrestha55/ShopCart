@@ -2,22 +2,41 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import GitHub from "./GitHub";
-
+import { useRouter } from "next/navigation";
 const RegisterForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
+  const router = useRouter();
+  const validate = () => {
+    if (name.length < 3) return "Name must be at least 2 characters";
+    if (!email.endsWith(".com")) return "Email must end with .com";
+    if (password.length < 8) return "Password must be at least 8 characters";
+    return null;
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!name || !password || !email) {
       setError("All fields are required");
       return;
     }
-
+    const validationError = validate();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
     try {
+      const res = await fetch("/api/userexists", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email })
+      });
+      const { user } = await res.json();
+      if (user) {
+        setError("User already Exists!");
+        return;
+      }
       const response = await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -26,18 +45,20 @@ const RegisterForm = () => {
 
       if (response.ok) {
         const data = await response.json();
+        const form = e.target;
         setName("");
         setEmail("");
         setPassword("");
         setError("");
-        console.log("Registration Successful", data.message);
+        form.reset();
+        console.log("Registration Successful!", data.message);
+        router.push("/login");
       } else {
         const errorData = await response.json();
         setError(errorData.error || "Error occurred during registration");
       }
     } catch (err) {
       console.error("Registration error:", err);
-      setError("Error occurred during registration");
     }
   };
 
@@ -74,7 +95,7 @@ const RegisterForm = () => {
               href="/login"
               className="text-blue-500 hover:text-blue-700 hover:underline"
             >
-              Login
+              Log in
             </Link>
           </p>
           <GitHub />
