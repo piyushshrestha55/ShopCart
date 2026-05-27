@@ -32,17 +32,16 @@ const LoginForm = () => {
         <h2 className="text-2xl font-bold mb-6 text-center">
           Login to Shop<span className="text-blue-500">Cart</span>
         </h2>
-        <form
-          onSubmit={() => handleSubmit(e)}
-          className="flex flex-col space-y-2"
-        >
+        <form onSubmit={handleSubmit} className="flex flex-col space-y-2">
           <input
+            name="email"
             type="text"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
+            name="password"
             type="password"
             placeholder="Password"
             value={password}

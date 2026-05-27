@@ -1,14 +1,30 @@
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
-
-const authOptions = {
+import connectDB from "@/lib/connectDB";
+import { User } from "@/models/User";
+import bcrypt from "bcrypt";
+export const authOptions = {
   providers: [
     CredentialsProvider({
       name: "credentials",
       credentials: {},
 
       async authorize(credentials) {
-        const user = { id: "1", email: "demo@example.com" };
+        const { email, password } = credentials;
+        try {
+          await connectDB();
+          const user = await User.findOne({ email });
+          if (!user) {
+            return null;
+          }
+          const matchedPassword = await bcrypt.compare(password, user.password);
+          if (!matchedPassword) {
+            return null;
+          }
+          return user;
+        } catch (err) {
+          console.log("Error: ", err);
+        }
         return user;
       }
     })
