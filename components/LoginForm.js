@@ -2,12 +2,29 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import GitHub from "./GitHub";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const handleSubmit = (e) => {
+  const router = useRouter();
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const res = await signIn("credentials", {
+        email,
+        password,
+        redirect: false
+      });
+      if (res.error) {
+        setError("Invalid Credentials");
+        return;
+      }
+      router.replace("/dashboard");
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="h-screen flex flex-col justify-center items-center">
@@ -15,17 +32,16 @@ const LoginForm = () => {
         <h2 className="text-2xl font-bold mb-6 text-center">
           Login to Shop<span className="text-blue-500">Cart</span>
         </h2>
-        <form
-          onSubmit={() => handleSubmit()}
-          className="flex flex-col space-y-2"
-        >
+        <form onSubmit={handleSubmit} className="flex flex-col space-y-2">
           <input
+            name="email"
             type="text"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
+            name="password"
             type="password"
             placeholder="Password"
             value={password}
@@ -39,7 +55,7 @@ const LoginForm = () => {
               href="/register"
               className="text-blue-500 hover:text-blue-700 hover:underline "
             >
-              Log In
+              Register
             </Link>
           </p>
           <GitHub />

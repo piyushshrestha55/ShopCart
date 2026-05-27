@@ -8,7 +8,7 @@ const NavBar = () => {
       </h1>
       <div className="flex space-x-4">
         <Link
-          href="/signup"
+          href="/register"
           className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-4 rounded-xl"
         >
           Register

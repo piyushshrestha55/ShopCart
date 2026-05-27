@@ -2,12 +2,17 @@ import NavBar from "@/components/NavBar";
 import Image from "next/image";
 import localFont from "next/font/local";
 import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 const poppins = localFont({
   src: "./fonts/Poppins-ExtraBold.ttf",
   variable: "--font-poppins",
   weight: "100  900"
 });
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession(authOptions);
+  if (session) redirect("/dashboard");
   return (
     <main>
       <NavBar />
@@ -16,6 +21,7 @@ export default function Home() {
           src="/home.jpg"
           alt="Placeholder"
           fill
+          loading="eager"
           className="object-cover rounded"
         />
         <div
