@@ -13,6 +13,11 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true
+    },
+    role: {
+      type: String,
+      enum: ["Customer", "Vendor"],
+      required: true
     }
   },
   { timestamps: true }

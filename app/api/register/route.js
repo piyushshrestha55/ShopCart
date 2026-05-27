@@ -4,10 +4,10 @@ import connectDB from "@/lib/connectDB";
 import bcrypt from "bcrypt";
 export async function POST(request) {
   try {
-    const { name, email, password } = await request.json();
+    const { name, email, password, role } = await request.json();
     const hashedPassword = await bcrypt.hash(password, 10);
     await connectDB();
-    await User.create({ name, email, password: hashedPassword });
+    await User.create({ name, email, password: hashedPassword, role });
     return NextResponse.json({
       message: "User has been successfully registered"
     });
