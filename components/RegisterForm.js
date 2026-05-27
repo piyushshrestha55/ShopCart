@@ -8,16 +8,20 @@ const RegisterForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [role, setRole] = useState("");
+
   const router = useRouter();
   const validate = () => {
     if (name.length < 3) return "Name must be at least 2 characters";
     if (!email.endsWith(".com")) return "Email must end with .com";
     if (password.length < 8) return "Password must be at least 8 characters";
+    if (!role) return "Please select an account type";
+
     return null;
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!name || !password || !email) {
+    if (!name || !password || !email || !role) {
       setError("All fields are required");
       return;
     }
@@ -40,7 +44,7 @@ const RegisterForm = () => {
       const response = await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password })
+        body: JSON.stringify({ name, email, password, role })
       });
 
       if (response.ok) {
@@ -49,6 +53,7 @@ const RegisterForm = () => {
         setName("");
         setEmail("");
         setPassword("");
+        setRole("");
         setError("");
         form.reset();
         console.log("Registration Successful!", data.message);
@@ -87,6 +92,15 @@ const RegisterForm = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <select
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            className="border rounded p-2"
+          >
+            <option value="">Select Account Type</option>
+            <option value="Customer">Customer</option>
+            <option value="Vendor">Vendor</option>
+          </select>
           {error && <div className="text-red-600">{error}</div>}
           <button type="submit">Register</button>
           <p className="text-sm text-gray-600 mt-4 text-center">
