@@ -102,7 +102,12 @@ const RegisterForm = () => {
             <option value="Vendor">Vendor</option>
           </select>
           {error && <div className="text-red-600">{error}</div>}
-          <button type="submit">Register</button>
+          <button
+            type="submit"
+            className=" bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg mt-4"
+          >
+            Register
+          </button>
           <p className="text-sm text-gray-600 mt-4 text-center">
             Already have an account?{" "}
             <Link

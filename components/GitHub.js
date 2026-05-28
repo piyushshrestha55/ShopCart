@@ -14,6 +14,7 @@ const GitHub = () => {
           alt="GitHub"
           width={23}
           height={23}
+          loading="eager"
           className="mr-2"
         />
         <span>Login with GitHub</span>

@@ -35,6 +35,20 @@ export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/login"
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.role = user.role; // attach role from DB
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token?.role) {
+        session.user.role = token.role; // expose role to client
+      }
+      return session;
+    }
   }
 };
 

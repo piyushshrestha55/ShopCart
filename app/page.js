@@ -14,7 +14,7 @@ export default async function Home() {
   const session = await getServerSession(authOptions);
   if (session) redirect("/dashboard");
   return (
-    <main>
+    <main className="relative">
       <NavBar />
       <div className="w-[98vw] h-[60vh] mx-auto relative my-2 ">
         <Image
