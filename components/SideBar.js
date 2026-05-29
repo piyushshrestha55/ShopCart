@@ -71,7 +71,7 @@ const SideBar = () => {
     <motion.div
       animate={isOpen ? "open" : "closed"}
       variants={containerVariant}
-      className={`h-screen flex flex-col shadow-lg shadow-neutral-300  px-4 py-3 gap-6 relative `}
+      className={`h-screen flex flex-col shadow-lg shadow-neutral-300  px-4 py-3 gap-8 sticky top-0 `}
     >
       <div className="flex justify-between items-center ">
         {isOpen && (
@@ -90,80 +90,71 @@ const SideBar = () => {
       </div>
       <motion.ul
         variants={parentVariant}
-        className="flex flex-col cursor-pointer gap-4"
+        className="flex flex-col cursor-pointer gap-6"
       >
         {!isVendor ? (
-          <motion.li
-            variants={childrenVariant}
-            className="flex gap-1 items-center "
-          >
-            <IconBuildingStore />
-            {isOpen && <span className="text-neutral-600">Marketplace</span>}
+          <motion.li variants={childrenVariant}>
+            <Link href={"/dashboard"} className="flex gap-1 items-center ">
+              <IconBuildingStore />
+              {isOpen && <span className="text-neutral-600">Marketplace</span>}
+            </Link>
           </motion.li>
         ) : (
-          <motion.li
-            className="flex gap-1 items-center "
-            variants={childrenVariant}
-          >
-            <IconDashboard />
-            {isOpen && <span className="text-neutral-600">Dashboard</span>}
+          <motion.li variants={childrenVariant}>
+            <Link href={"/dashboard"} className="flex gap-1 items-center ">
+              <IconDashboard />
+              {isOpen && <span className="text-neutral-600">Dashboard</span>}
+            </Link>
           </motion.li>
         )}
         {!isVendor ? (
-          <motion.li
-            variants={childrenVariant}
-            className="flex gap-1 items-center "
-          >
-            <IconShoppingCart />
-            {isOpen && <span className="text-neutral-600">Cart</span>}
+          <motion.li variants={childrenVariant}>
+            <Link href={"/cart"} className="flex gap-1 items-center ">
+              <IconShoppingCart />
+              {isOpen && <span className="text-neutral-600">Cart</span>}
+            </Link>
           </motion.li>
         ) : (
-          <motion.li
-            className="flex gap-1 items-center "
-            variants={childrenVariant}
-          >
-            <IconBrandGoogleAnalytics />
-            {isOpen && <span className="text-neutral-600">Analytics</span>}
+          <motion.li variants={childrenVariant}>
+            <Link href={"/analytics"} className="flex gap-1 items-center ">
+              <IconBrandGoogleAnalytics />
+              {isOpen && <span className="text-neutral-600">Analytics</span>}
+            </Link>
           </motion.li>
         )}
         {isVendor && (
-          <motion.li
-            className="flex gap-1 items-center "
-            variants={childrenVariant}
-          >
-            <IconListDetailsFilled />
-            {isOpen && <span className="text-neutral-600">Products</span>}
+          <motion.li variants={childrenVariant}>
+            <Link href={"/products"} className="flex gap-1 items-center ">
+              <IconListDetailsFilled />
+              {isOpen && <span className="text-neutral-600">Products</span>}
+            </Link>
           </motion.li>
         )}
         {isVendor && (
-          <motion.li
-            className="flex gap-1 items-center "
-            variants={childrenVariant}
-          >
-            <IconShoppingCartPlus />
-            {isOpen && <span className="text-neutral-600">Inventory</span>}
+          <motion.li variants={childrenVariant}>
+            <Link href={"/inventory"} className="flex gap-1 items-center ">
+              <IconShoppingCartPlus />
+              {isOpen && <span className="text-neutral-600">Inventory</span>}
+            </Link>
           </motion.li>
         )}
-        <motion.li
-          variants={childrenVariant}
-          className="flex gap-1 items-center "
-        >
-          <IconShoppingBag />
-          {isOpen && <span className="text-neutral-600">Orders</span>}
+        <motion.li variants={childrenVariant}>
+          <Link href={"/orders"} className="flex gap-1 items-center ">
+            <IconShoppingBag />
+            {isOpen && <span className="text-neutral-600">Orders</span>}
+          </Link>
         </motion.li>
-        <motion.li
-          variants={childrenVariant}
-          className="flex gap-1 items-center "
-        >
-          <IconUser />
-          {isOpen && <span className="text-neutral-600">Profile</span>}
+        <motion.li variants={childrenVariant}>
+          <Link href={"/profile"} className="flex gap-1 items-center ">
+            <IconUser />
+            {isOpen && <span className="text-neutral-600">Profile</span>}
+          </Link>
         </motion.li>
-        <motion.li
-          variants={childrenVariant}
-          className="flex gap-1 items-center "
-        >
-          <IconSettings />
-          {isOpen && <span className="text-neutral-600">Settings</span>}
+        <motion.li variants={childrenVariant}>
+          <Link href={"settings"} className="flex gap-1 items-center ">
+            <IconSettings />
+            {isOpen && <span className="text-neutral-600">Settings</span>}
+          </Link>
         </motion.li>
       </motion.ul>
       <div className="mt-auto">

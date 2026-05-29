@@ -5,7 +5,7 @@ import SideBar from "../SideBar";
 const Marketplace = () => {
   const { data: session } = useSession();
   return (
-    <div className="min-h-screen w-full flex">
+    <div className="min-h-screen w-full flex relative">
       <SideBar />
       <div className="w-full h-screen flex justify-center items-center">
         <div className="shadow-lg  p-8 bg-zinc-300/10 flex flex-col gap-2 my-6">

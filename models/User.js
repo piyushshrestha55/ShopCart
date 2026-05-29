@@ -1,4 +1,3 @@
-import { Timestamp } from "mongodb";
 import mongoose, { models, Schema } from "mongoose";
 const userSchema = new Schema(
   {

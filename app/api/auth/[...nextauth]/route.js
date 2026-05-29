@@ -25,7 +25,6 @@ export const authOptions = {
         } catch (err) {
           console.log("Error: ", err);
         }
-        return user;
       }
     })
   ],
@@ -39,6 +38,7 @@ export const authOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
+        token.id = user._id;
         token.role = user.role; // attach role from DB
       }
       return token;
@@ -46,6 +46,7 @@ export const authOptions = {
     async session({ session, token }) {
       if (token?.role) {
         session.user.role = token.role; // expose role to client
+        session.user._id = token.id; // expose role to client
       }
       return session;
     }
