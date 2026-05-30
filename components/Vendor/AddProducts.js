@@ -71,7 +71,6 @@ const AddProducts = () => {
 
         const savedProduct = await res.json();
 
-        // Add to local state for immediate UI update
         setProducts([...products, savedProduct]);
         // Reset form
         setFormData({ name: "", price: "", description: "", image: "" });

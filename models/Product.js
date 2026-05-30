@@ -1,4 +1,5 @@
 import mongoose, { models, Schema } from "mongoose";
+
 const productSchema = new Schema(
   {
     product_id: {
@@ -25,6 +26,11 @@ const productSchema = new Schema(
     product_image: {
       type: String,
       required: true
+    },
+    stock: {
+      type: Number,
+      required: true,
+      default: 0
     }
   },
   { timestamps: true }
