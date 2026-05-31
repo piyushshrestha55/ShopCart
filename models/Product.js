@@ -20,7 +20,8 @@ const productSchema = new Schema(
       required: true
     },
     vendor_id: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "User",
       required: true
     },
     product_image: {

@@ -10,7 +10,7 @@ const dashboard = () => {
     return (
       <div className="w-screen h-screen flex  justify-center items-center">
         <div className="shadow-lg shadow-gray-300 p-10 rounded-2xl">
-          <p className="font-semi-bold text-2xl">Loading dashboard...</p>;
+          <p className="font-semi-bold text-2xl">Loading dashboard...</p>
         </div>
       </div>
     );

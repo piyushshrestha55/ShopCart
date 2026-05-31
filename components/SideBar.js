@@ -107,14 +107,7 @@ const SideBar = () => {
             </Link>
           </motion.li>
         )}
-        {!isVendor ? (
-          <motion.li variants={childrenVariant}>
-            <Link href={"/cart"} className="flex gap-1 items-center ">
-              <IconShoppingCart />
-              {isOpen && <span className="text-neutral-600">Cart</span>}
-            </Link>
-          </motion.li>
-        ) : (
+        {isVendor && (
           <motion.li variants={childrenVariant}>
             <Link href={"/analytics"} className="flex gap-1 items-center ">
               <IconBrandGoogleAnalytics />

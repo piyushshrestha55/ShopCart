@@ -11,7 +11,7 @@ const page = async () => {
     redirect("/"); // block non-vendors
   }
   return (
-    <div className="min-h-screen w-full flex relative">
+    <div className="min-h-screen w-full flex relative items-start">
       <SideBar />
       <AddProducts />
     </div>
