@@ -1,0 +1,52 @@
+import { NextResponse } from "next/server";
+import connectDB from "@/lib/connectDB";
+import { Order } from "@/models/Order";
+import { Product } from "@/models/Product";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/route";
+
+export async function POST(req) {
+  try {
+    await connectDB();
+
+    const session = await getServerSession(authOptions);
+    if (!session || !session.user || session.user.role !== "Customer") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    const { product_id, location, quantity } = await req.json();
+    const product = await Product.findById(product_id); //finding the product by the id
+    //validating the product
+    if (!product) {
+      return NextResponse.json({ error: "Product not found" }, { status: 404 });
+    }
+    if (product.stock < quantity) {
+      return NextResponse.json(
+        { error: "Insufficient stock" },
+        { status: 400 }
+      );
+    }
+    const total = product.price * quantity;
+    const newOrder = await Order.create({
+      customer_id: new mongoose.Types.ObjectId(session.user._id),
+      product_id: new mongoose.Types.ObjectId(product._id),
+      quantity,
+      location,
+      total: total,
+      status: "Pending"
+    });
+    //Decrementing the stock
+    product.stock -= quantity;
+    await product.save();
+
+    return NextResponse.json(
+      { message: "Your Order has been placed", order: newOrder },
+      { status: 200 }
+    );
+  } catch (err) {
+    console.log("Error placing Order ", err);
+    return NextResponse.json(
+      { message: "Error placing Order" },
+      { status: 500 }
+    );
+  }
+}

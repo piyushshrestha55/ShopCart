@@ -3,7 +3,6 @@ import connectDB from "@/lib/connectDB";
 import { Product } from "@/models/Product";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
-import { v4 as uuidv4 } from "uuid";
 export async function POST(req) {
   try {
     await connectDB();
@@ -17,11 +16,10 @@ export async function POST(req) {
 
     // Create product with vendor_id from session
     const product = await Product.create({
-      product_id: uuidv4(),
       product_name: body.product_name,
       price: body.price,
       product_des: body.product_des,
-      vendor_id: session.user._id,
+      vendor_id: new mongoose.Types.ObjectId(session.user._id),
       product_image: body.product_image
     });
 
@@ -35,7 +33,7 @@ export async function POST(req) {
   }
 }
 
-export async function GET(req) {
+export async function GET() {
   try {
     await connectDB();
     const session = await getServerSession(authOptions);

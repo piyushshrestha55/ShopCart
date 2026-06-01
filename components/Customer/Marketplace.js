@@ -6,6 +6,7 @@ import SideBar from "../SideBar";
 import { motion, AnimatePresence } from "motion/react";
 import { IconArrowRight } from "@tabler/icons-react";
 
+// This function is used for tracking the click events in the product cards
 const useOutsideClick = (callback) => {
   const ref = useRef(null);
 
@@ -26,8 +27,11 @@ const useOutsideClick = (callback) => {
 const Marketplace = () => {
   const { data: session } = useSession();
   const [products, setProducts] = useState([]);
+  const [location, setLocation] = useState("");
+  const [quantity, setQuantity] = useState(null);
   const [current, setCurrent] = useState(null);
   const ref = useOutsideClick(() => setCurrent(null));
+  //for loading all the products cards in the database while rendering
   useEffect(() => {
     const loadProducts = async () => {
       try {
@@ -44,6 +48,45 @@ const Marketplace = () => {
     };
     loadProducts();
   }, []);
+
+  // This function hanles the order of the customer
+  const handleOrder = async (product, location, quantity) => {
+    try {
+      if (!location) {
+        alert("Please enter your delivery address");
+        return;
+      }
+      if (!quantity || quantity <= 0) {
+        alert("Please enter a valid quantity");
+        return;
+      }
+
+      const res = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          product_id: product._id,
+          location: location,
+          quantity: quantity
+        })
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        console.log(data.message);
+        setProducts((prev) =>
+          prev.map((p) =>
+            p._id === product._id ? { ...p, stock: p.stock - quantity } : p
+          )
+        );
+      } else {
+        alert(data.error || "Failed to place order");
+      }
+    } catch (err) {
+      console.error("Error placing order:", err);
+    }
+  };
+
   return (
     <div className="min-h-screen w-full flex relative items-start">
       {current && (
@@ -58,13 +101,13 @@ const Marketplace = () => {
                 opacity: 0
               }}
               animate={{ opacity: 1 }}
-              layoutId={`card-${current.product_id}`}
+              layoutId={`card-${current._id}`}
               ref={ref}
               className="fixed inset-0 z-20 h-[600px] bg-white m-auto w-100 rounded-2xl border border-neutral-200  p-4  "
             >
               {current.product_image && (
                 <motion.div
-                  layoutId={`image-${current.product_id}`}
+                  layoutId={`image-${current._id}`}
                   className="relative w-full h-[40vh]"
                 >
                   <Image
@@ -79,7 +122,7 @@ const Marketplace = () => {
                   />
                 </motion.div>
               )}
-              <div className="flex flex-col bg-gray-50 rounded-lg p-2 gap-4">
+              <div className="flex flex-col bg-gray-50 rounded-lg p-2 gap-1">
                 <h2 className="font-semibold text-lg">
                   {current.product_name}
                 </h2>
@@ -87,11 +130,31 @@ const Marketplace = () => {
                   <p className="text-green-500">${current.price}</p>
                   <p className="text-sm text-gray-700">{current.product_des}</p>
                   <p className="text-sm text-gray-700">
-                    Stock: {current.stock}
+                    Stock: Stock:{" "}
+                    {current.stock > 0 ? current.stock : "Out of stock"}
                   </p>
                 </div>
                 <p className="flex gap-1 items-center">Place an Order Today</p>
-                <button className="bg-green-500 hover:bg-green-700 py-1 px-4 text-white rounded-xl">
+                <input
+                  type="text"
+                  placeholder="Enter your address to be delivered"
+                  onChange={(e) => {
+                    setLocation(e.target.value);
+                  }}
+                />
+                <input
+                  type="number"
+                  min="1"
+                  max={current.stock}
+                  placeholder="Quantity"
+                  onChange={(e) => setQuantity(Number(e.target.value))}
+                />
+
+                <button
+                  disabled={!location || !quantity || quantity <= 0}
+                  onClick={() => handleOrder(current, location, quantity)}
+                  className="bg-green-500 hover:bg-green-700 py-1 px-4 text-white rounded-xl"
+                >
                   Order Now
                 </button>
               </div>
@@ -107,14 +170,14 @@ const Marketplace = () => {
             <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {products.map((product) => (
                 <motion.button
-                  key={product.product_id}
-                  layoutId={`card-${product.product_id}`}
+                  key={product._id}
+                  layoutId={`card-${product._id}`}
                   className="bg-white p-4 border rounded shadow flex flex-col gap-3 cursor-pointer"
                   onClick={() => setCurrent(product)}
                 >
                   {product.product_image && (
                     <motion.div
-                      layoutId={`image-${product.product_id}`}
+                      layoutId={`image-${product._id}`}
                       className="relative w-full h-40"
                     >
                       <Image
@@ -138,7 +201,8 @@ const Marketplace = () => {
                       {product.product_des}
                     </p>
                     <p className="text-sm text-gray-700">
-                      Stock: {product.stock}
+                      Stock:{" "}
+                      {product.stock > 0 ? product.stock : "Out of stock"}
                     </p>
                     <p className="bg-green-400 hover:bg-green-500 text-white py-1 px-4 flex gap-2 rounded-xl">
                       Purchase Now

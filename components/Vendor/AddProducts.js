@@ -19,6 +19,7 @@ const AddProducts = () => {
         const res = await fetch("/api/product", { method: "GET" });
         if (!res.ok) throw new Error("Failed to fetch products");
         const data = await res.json();
+        console.log("Fetched products:", data);
         setProducts(data);
       } catch (err) {
         console.error("Error fetching products:", err);
@@ -156,7 +157,7 @@ const AddProducts = () => {
           <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {products.map((product) => (
               <div
-                key={product.product_id}
+                key={product._id}
                 className="bg-white flex flex-col gap-4 min-h-40 p-4 border rounded shadow "
               >
                 {product.product_image && (

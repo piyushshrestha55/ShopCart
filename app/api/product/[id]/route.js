@@ -28,7 +28,7 @@ export async function PUT(req, context) {
 
     // Updating the stock for this product
     const updatedProduct = await Product.findOneAndUpdate(
-      { product_id: id, vendor_id: session.user._id },
+      { _id: id, vendor_id: session.user._id },
       { stock },
       { returnDocument: "after" } // replaces deprecated { new: true }
     ).lean();

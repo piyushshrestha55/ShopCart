@@ -22,7 +22,7 @@ const Stock = () => {
 
   const handleStockChange = (productId, value) => {
     setProducts((prev) =>
-      prev.map((p) => (p.product_id === productId ? { ...p, stock: value } : p))
+      prev.map((p) => (p._id === productId ? { ...p, stock: value } : p))
     );
   };
 
@@ -40,7 +40,7 @@ const Stock = () => {
       // update local state with saved stock
       setProducts((prev) =>
         prev.map((p) =>
-          p.product_id === productId ? { ...p, stock: updated.stock } : p
+          p._id === productId ? { ...p, stock: updated.stock } : p
         )
       );
       alert("Stock updated successfully!");
@@ -61,7 +61,7 @@ const Stock = () => {
         <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {products.map((product) => (
             <div
-              key={product.product_id}
+              key={product._id}
               className="bg-white p-4 border rounded shadow flex flex-col gap-3"
             >
               {product.product_image && (
@@ -87,19 +87,14 @@ const Stock = () => {
                   type="number"
                   value={product.stock ?? 0}
                   onChange={(e) =>
-                    handleStockChange(
-                      product.product_id,
-                      Number(e.target.value)
-                    )
+                    handleStockChange(product._id, Number(e.target.value))
                   }
                   className="w-24 p-2 border rounded"
                   placeholder="Stock"
                 />
 
                 <button
-                  onClick={() =>
-                    saveStock(product.product_id, Number(product.stock))
-                  }
+                  onClick={() => saveStock(product._id, Number(product.stock))}
                   disabled={loading}
                   className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 disabled:bg-gray-400"
                 >
