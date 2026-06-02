@@ -4,6 +4,7 @@ import { Order } from "@/models/Order";
 import { Product } from "@/models/Product";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
+import mongoose from "mongoose";
 
 export async function POST(req) {
   try {

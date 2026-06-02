@@ -28,7 +28,7 @@ const Marketplace = () => {
   const { data: session } = useSession();
   const [products, setProducts] = useState([]);
   const [location, setLocation] = useState("");
-  const [quantity, setQuantity] = useState(null);
+  const [quantity, setQuantity] = useState(0);
   const [current, setCurrent] = useState(null);
   const ref = useOutsideClick(() => setCurrent(null));
   //for loading all the products cards in the database while rendering
@@ -49,7 +49,7 @@ const Marketplace = () => {
     loadProducts();
   }, []);
 
-  // This function hanles the order of the customer
+  // This function handles the order of the customer
   const handleOrder = async (product, location, quantity) => {
     try {
       if (!location) {
@@ -73,12 +73,14 @@ const Marketplace = () => {
 
       const data = await res.json();
       if (res.ok) {
-        console.log(data.message);
+        alert(data.message);
         setProducts((prev) =>
           prev.map((p) =>
             p._id === product._id ? { ...p, stock: p.stock - quantity } : p
           )
         );
+        setLocation("");
+        setQuantity(0);
       } else {
         alert(data.error || "Failed to place order");
       }
@@ -130,14 +132,14 @@ const Marketplace = () => {
                   <p className="text-green-500">${current.price}</p>
                   <p className="text-sm text-gray-700">{current.product_des}</p>
                   <p className="text-sm text-gray-700">
-                    Stock: Stock:{" "}
-                    {current.stock > 0 ? current.stock : "Out of stock"}
+                    Stock:{current.stock > 0 ? current.stock : "Out of stock"}
                   </p>
                 </div>
                 <p className="flex gap-1 items-center">Place an Order Today</p>
                 <input
                   type="text"
                   placeholder="Enter your address to be delivered"
+                  value={location}
                   onChange={(e) => {
                     setLocation(e.target.value);
                   }}
@@ -146,13 +148,16 @@ const Marketplace = () => {
                   type="number"
                   min="1"
                   max={current.stock}
+                  value={quantity}
                   placeholder="Quantity"
                   onChange={(e) => setQuantity(Number(e.target.value))}
                 />
 
                 <button
                   disabled={!location || !quantity || quantity <= 0}
-                  onClick={() => handleOrder(current, location, quantity)}
+                  onClick={() => {
+                    handleOrder(current, location, quantity);
+                  }}
                   className="bg-green-500 hover:bg-green-700 py-1 px-4 text-white rounded-xl"
                 >
                   Order Now
