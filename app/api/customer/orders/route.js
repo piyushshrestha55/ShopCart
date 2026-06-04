@@ -3,7 +3,7 @@ import connectDB from "@/lib/connectDB";
 import { Order } from "@/models/Order";
 import { Product } from "@/models/Product";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "../../auth/[...nextauth]/route";
 import mongoose from "mongoose";
 
 export async function POST(req) {
@@ -47,6 +47,31 @@ export async function POST(req) {
     console.log("Error placing Order ", err);
     return NextResponse.json(
       { message: "Error placing Order" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET() {
+  try {
+    await connectDB();
+    const session = await getServerSession(authOptions);
+    if (!session || !session.user || session.user.role !== "Customer") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    //finding the ordered product of the customer
+    const orders = await Order.find({
+      customer_id: new mongoose.Types.ObjectId(session.user._id)
+    })
+      .populate("product_id", "product_name price")
+      .populate({
+        path: "product_id",
+        populate: { path: "vendor_id", select: "name email" }
+      });
+    return NextResponse.json({ orders }, { status: 200 });
+  } catch (err) {
+    return NextResponse.json(
+      { error: "Error fetching the orders" },
       { status: 500 }
     );
   }

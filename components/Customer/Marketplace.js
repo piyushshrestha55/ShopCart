@@ -35,12 +35,12 @@ const Marketplace = () => {
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const res = await fetch("/api/marketplace", { method: "GET" });
+        const res = await fetch("/api/customer/marketplace", { method: "GET" });
         if (!res.ok) {
           console.log("Error fetching the products");
         }
-        const data = await res.json();
-        setProducts(data);
+        const { products } = await res.json();
+        setProducts(products);
         console.log("Product Fetched Successfully");
       } catch (err) {
         console.log("Error fetching the products");
@@ -61,7 +61,7 @@ const Marketplace = () => {
         return;
       }
 
-      const res = await fetch("/api/orders", {
+      const res = await fetch("/api/customer/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -105,8 +105,14 @@ const Marketplace = () => {
               animate={{ opacity: 1 }}
               layoutId={`card-${current._id}`}
               ref={ref}
-              className="fixed inset-0 z-20 h-[600px] bg-white m-auto w-100 rounded-2xl border border-neutral-200  p-4  "
+              className="fixed inset-0 z-20 h-[620px] bg-white m-auto w-100 rounded-2xl border border-neutral-200  px-4 py-8   "
             >
+              <button
+                onClick={() => setCurrent(null)}
+                className="absolute top-1 right-1 z-13 bg-red-500 hover:bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center"
+              >
+                ✕
+              </button>
               {current.product_image && (
                 <motion.div
                   layoutId={`image-${current._id}`}

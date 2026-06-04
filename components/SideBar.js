@@ -109,14 +109,6 @@ const SideBar = () => {
         )}
         {isVendor && (
           <motion.li variants={childrenVariant}>
-            <Link href={"/analytics"} className="flex gap-1 items-center ">
-              <IconBrandGoogleAnalytics />
-              {isOpen && <span className="text-neutral-600">Analytics</span>}
-            </Link>
-          </motion.li>
-        )}
-        {isVendor && (
-          <motion.li variants={childrenVariant}>
             <Link href={"/products"} className="flex gap-1 items-center ">
               <IconListDetailsFilled />
               {isOpen && <span className="text-neutral-600">Products</span>}
@@ -141,12 +133,6 @@ const SideBar = () => {
           <Link href={"/profile"} className="flex gap-1 items-center ">
             <IconUser />
             {isOpen && <span className="text-neutral-600">Profile</span>}
-          </Link>
-        </motion.li>
-        <motion.li variants={childrenVariant}>
-          <Link href={"settings"} className="flex gap-1 items-center ">
-            <IconSettings />
-            {isOpen && <span className="text-neutral-600">Settings</span>}
           </Link>
         </motion.li>
       </motion.ul>

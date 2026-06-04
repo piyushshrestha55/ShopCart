@@ -5,9 +5,9 @@ export async function GET() {
   try {
     await connectDB();
     const products = await Product.find({}).lean();
-    return NextResponse.json(products, { status: 200 });
+    return NextResponse.json({ products }, { status: 200 });
   } catch (err) {
-    console.log("Error fetching the products.");
+    console.error("Error fetching the products.", err);
     return NextResponse.json(
       { message: "Error fetching products" },
       { status: 500 }
