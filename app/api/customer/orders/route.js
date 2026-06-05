@@ -63,7 +63,7 @@ export async function GET() {
     const orders = await Order.find({
       customer_id: new mongoose.Types.ObjectId(session.user._id)
     })
-      .populate("product_id", "product_name price")
+      .populate("product_id", "product_name price product_image")
       .populate({
         path: "product_id",
         populate: { path: "vendor_id", select: "name email" }
@@ -75,4 +75,30 @@ export async function GET() {
       { status: 500 }
     );
   }
+}
+
+export async function PUT(req) {
+  await connectDB();
+  const session = await getServerSession(authOptions);
+
+  if (!session || session.user.role !== "Customer") {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const { orderId } = await req.json();
+
+  const updatedOrder = await Order.findOneAndUpdate(
+    {
+      _id: new mongoose.Types.ObjectId(orderId),
+      customer_id: session.user._id
+    },
+    { status: "Cancelled" },
+    { returnDocument: "after" }
+  ).lean();
+
+  if (!updatedOrder) {
+    return NextResponse.json({ error: "Order not found" }, { status: 404 });
+  }
+
+  return NextResponse.json({ order: updatedOrder }, { status: 200 });
 }

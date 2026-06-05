@@ -116,16 +116,16 @@ const Marketplace = () => {
               {current.product_image && (
                 <motion.div
                   layoutId={`image-${current._id}`}
-                  className="relative w-full h-[40vh]"
+                  className="relative w-full aspect-[4/3]" // consistent aspect ratio
                 >
                   <Image
                     src={current.product_image}
                     alt={current.product_name}
+                    loading="eager"
                     fill
-                    loading={"eager"}
                     sizes="(max-width: 768px) 100vw,
-                                    (max-width: 1200px) 50vw,
-                                    33vw"
+                           (max-width: 1200px) 50vw,
+                            33vw"
                     className="object-cover rounded"
                   />
                 </motion.div>
@@ -177,7 +177,7 @@ const Marketplace = () => {
         </h1>
         <div className="shadow-lg w-full min-h-screen p-6 mx-1 bg-zinc-300/10 flex flex-col gap-4 my-6">
           <h2 className="font-bold text-xl">Explore the Market,</h2>
-          {products ? (
+          {products.length > 0 ? (
             <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {products.map((product) => (
                 <motion.button
@@ -189,16 +189,16 @@ const Marketplace = () => {
                   {product.product_image && (
                     <motion.div
                       layoutId={`image-${product._id}`}
-                      className="relative w-full h-40"
+                      className="relative w-full aspect-[4/3]" // instead of h-100
                     >
                       <Image
                         src={product.product_image}
                         alt={product.product_name}
+                        loading="eager"
                         fill
-                        loading={"eager"}
                         sizes="(max-width: 768px) 100vw,
-                                    (max-width: 1200px) 50vw,
-                                    33vw"
+                                (max-width: 1200px) 50vw,
+                                33vw"
                         className="object-cover rounded"
                       />
                     </motion.div>

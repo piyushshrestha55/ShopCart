@@ -65,14 +65,15 @@ const Stock = () => {
               className="bg-white p-4 border rounded shadow flex flex-col gap-3"
             >
               {product.product_image && (
-                <div className="relative w-full h-40">
+                <div className="relative w-full aspect-[4/3]">
                   <Image
                     src={product.product_image}
                     alt={product.product_name}
+                    loading="eager"
                     fill
                     sizes="(max-width: 768px) 100vw,
                           (max-width: 1200px) 50vw,
-                          33vw"
+                            33vw"
                     className="object-cover rounded"
                   />
                 </div>

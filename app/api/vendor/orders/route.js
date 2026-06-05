@@ -20,7 +20,7 @@ export async function GET() {
     // New extracting all the Product ids in an array
     const productIds = vendorProducts.map((p) => p._id);
     const orders = await Order.find({ product_id: { $in: productIds } })
-      .populate("product_id", "product_name price")
+      .populate("product_id", "product_name price product_image")
       .populate("customer_id", "name email");
     return NextResponse.json({ orders }, { status: 200 });
   } catch (err) {

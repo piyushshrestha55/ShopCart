@@ -7,13 +7,10 @@ import { signOut } from "next-auth/react";
 import {
   IconArrowLeft,
   IconArrowRight,
-  IconBrandGoogleAnalytics,
   IconBuildingStore,
   IconDashboard,
   IconListDetailsFilled,
-  IconSettings,
   IconShoppingBag,
-  IconShoppingCart,
   IconShoppingCartPlus,
   IconUser
 } from "@tabler/icons-react";

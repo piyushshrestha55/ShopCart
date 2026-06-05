@@ -19,7 +19,6 @@ const AddProducts = () => {
         const res = await fetch("/api/product", { method: "GET" });
         if (!res.ok) throw new Error("Failed to fetch products");
         const data = await res.json();
-        console.log("Fetched products:", data);
         setProducts(data);
       } catch (err) {
         console.error("Error fetching products:", err);
@@ -161,16 +160,16 @@ const AddProducts = () => {
                 className="bg-white flex flex-col gap-4 min-h-40 p-4 border rounded shadow "
               >
                 {product.product_image && (
-                  <div className="relative w-full h-100">
+                  <div className="relative w-full aspect-[4/3] sm:aspect-[3/2]">
                     <Image
                       src={product.product_image}
                       alt={product.product_name}
-                      fill
-                      sizes="(max-width: 768px) 100vw,
-                          (max-width: 1200px) 50vw,
-                          33vw"
                       loading="eager"
-                      className="h-40 w-full object-cover rounded mb-3"
+                      fill
+                      sizes="(max-width: 640px) 100vw,
+           (max-width: 1024px) 50vw,
+           33vw"
+                      className="object-cover rounded"
                     />
                   </div>
                 )}
