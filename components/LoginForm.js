@@ -63,7 +63,6 @@ const LoginForm = () => {
               Register
             </Link>
           </p>
-          <GitHub />
         </form>
       </div>
     </div>

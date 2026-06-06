@@ -18,7 +18,7 @@ const dashboard = () => {
   }
 
   if (session?.user?.role === "Vendor") {
-    return <AdminDashboard />;
+    return <AdminDashboard name={session?.user?.name} />;
   }
 
   return <Marketplace />;

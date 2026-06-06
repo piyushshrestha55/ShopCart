@@ -3,7 +3,7 @@ import connectDB from "@/lib/connectDB";
 import { Product } from "@/models/Product";
 import { getServerSession } from "next-auth";
 import mongoose from "mongoose";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 export async function POST(req) {
   try {
     await connectDB();
@@ -44,7 +44,9 @@ export async function GET() {
     }
 
     // Fetch all products for this vendor
-    const products = await Product.find({ vendor_id: session.user._id });
+    const products = await Product.find({
+      vendor_id: new mongoose.Types.ObjectId(session.user._id)
+    });
     return NextResponse.json(products, { status: 200 });
   } catch (err) {
     console.error("Error fetching products:", err);

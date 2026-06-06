@@ -117,7 +117,6 @@ const RegisterForm = () => {
               Log in
             </Link>
           </p>
-          <GitHub />
         </form>
       </div>
     </div>

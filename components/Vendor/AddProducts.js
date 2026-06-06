@@ -43,7 +43,7 @@ const AddProducts = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("/api/product", { method: "GET" });
+        const res = await fetch("/api/vendor/product", { method: "GET" });
         if (!res.ok) throw new Error("Failed to fetch products");
         const data = await res.json();
         setProducts(data);
@@ -81,7 +81,7 @@ const AddProducts = () => {
     if (formData.name && formData.price && formData.image) {
       setLoading(true);
       try {
-        const res = await fetch("/api/product", {
+        const res = await fetch("/api/vendor/product", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

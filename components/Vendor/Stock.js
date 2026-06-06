@@ -33,7 +33,7 @@ const Stock = () => {
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const response = await fetch("/api/product", { method: "GET" });
+        const response = await fetch("/api/vendor/product", { method: "GET" });
         if (!response.ok) throw new Error("Failed to fetch products");
         const data = await response.json();
         setProducts(data);
@@ -53,7 +53,7 @@ const Stock = () => {
   const saveStock = async (productId, stock) => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/product/${productId}`, {
+      const res = await fetch(`/api/vendor/product/${productId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ stock })

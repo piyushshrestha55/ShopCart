@@ -68,9 +68,9 @@ const SideBar = () => {
     <motion.div
       animate={isOpen ? "open" : "closed"}
       variants={containerVariant}
-      className={`h-screen flex flex-col shadow-lg shadow-neutral-300  px-4 py-3 gap-8 sticky top-0 `}
+      className="h-screen flex flex-col shadow-lg px-4 py-3 gap-8 sticky top-0"
     >
-      <div className="flex justify-between items-center ">
+      <div className="flex justify-between items-center gap-2 ">
         {isOpen && (
           <Link href={"/"} className="font-bold cursor-pointer text-lg">
             Shop<span className="text-blue-500 ">Cart</span>
