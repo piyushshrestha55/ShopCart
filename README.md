@@ -1,4 +1,4 @@
-This app is an ecommerce website built with React and Redux. It allows users to browse products, add them to a shopping cart, and proceed to checkout. The app also includes user authentication and order history features.
+This app is an ecommerce website built with React and Next.js. It allows users to browse products, add them to a shopping cart, and proceed to checkout. The app also includes user authentication and order history features.
 
 ## Features
 
