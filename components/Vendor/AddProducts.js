@@ -209,7 +209,7 @@ const AddProducts = () => {
                 )}
                 <div className="flex flex-col justify-start">
                   <h3 className="font-semibold">{product.product_name}</h3>
-                  <p className="text-gray-600">${product.price}</p>
+                  <p className="text-green-600">${product.price}</p>
                   <p className="text-sm text-gray-700">{product.product_des}</p>
                 </div>
               </motion.div>

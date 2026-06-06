@@ -112,7 +112,7 @@ const Stock = () => {
                 </div>
               )}
               <h2 className="font-semibold text-lg">{product.product_name}</h2>
-              <p className="text-gray-600">${product.price}</p>
+              <p className="text-green-600">${product.price}</p>
               <p className="text-sm text-gray-700">{product.product_des}</p>
 
               {/* Stock input */}
