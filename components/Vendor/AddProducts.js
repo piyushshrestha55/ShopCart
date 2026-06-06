@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { motion } from "motion/react";
 
 const AddProducts = () => {
   const [products, setProducts] = useState([]);
@@ -13,6 +14,32 @@ const AddProducts = () => {
   });
   const [imagePreview, setImagePreview] = useState(null);
   const [loading, setLoading] = useState(false);
+  const parentVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.25,
+        delayChildren: 0.1,
+        ease: "easeOut"
+      }
+    }
+  };
+  const childrenVariants = {
+    hidden: {
+      opacity: 0,
+      y: 20,
+      scale: 0.95
+    },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.3, ease: "easeOut" }
+    }
+  };
+
+  //fetching the products
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -89,9 +116,11 @@ const AddProducts = () => {
   };
 
   return (
-    <div className="w-full min-h-screen p-6">
-      <h1 className="text-2xl font-bold mb-6">Manage Products</h1>
-      <div className="bg-gray-100 p-4 rounded-lg mb-8">
+    <div className="w-full min-h-screen ">
+      <h1 className="text-2xl text-white font-bold mb-6 bg-blue-600 px-3 py-2">
+        Manage Products
+      </h1>
+      <div className="bg-gray-100 mx-4 p-4 rounded-lg mb-8">
         <h2 className="text-xl font-semibold mb-4">Add New Product</h2>
         <form onSubmit={handleAddProduct}>
           <input
@@ -148,14 +177,19 @@ const AddProducts = () => {
         </form>
       </div>
 
-      <div>
+      <motion.div initial="hidden" animate="show" className="mx-4 p-4">
         <h2 className="text-xl font-semibold mb-4">Your Products</h2>
         {products.length === 0 ? (
           <p>No products yet</p>
         ) : (
-          <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          <motion.div
+            key={products.length}
+            variants={parentVariants}
+            className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+          >
             {products.map((product) => (
-              <div
+              <motion.div
+                variants={childrenVariants}
                 key={product._id}
                 className="bg-white flex flex-col gap-4 min-h-40 p-4 border rounded shadow "
               >
@@ -178,11 +212,11 @@ const AddProducts = () => {
                   <p className="text-gray-600">${product.price}</p>
                   <p className="text-sm text-gray-700">{product.product_des}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 };

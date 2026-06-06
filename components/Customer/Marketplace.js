@@ -31,6 +31,30 @@ const Marketplace = () => {
   const [quantity, setQuantity] = useState(0);
   const [current, setCurrent] = useState(null);
   const ref = useOutsideClick(() => setCurrent(null));
+  const parentVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
+        ease: "easeOut"
+      }
+    }
+  };
+  const childrenVariants = {
+    hidden: {
+      opacity: 0,
+      y: 20,
+      scale: 0.95
+    },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.5 }
+    }
+  };
   //for loading all the products cards in the database while rendering
   useEffect(() => {
     const loadProducts = async () => {
@@ -175,15 +199,22 @@ const Marketplace = () => {
         <h1 className="font-bold text-2xl w-full bg-blue-600 text-white py-3 px-2">
           Welcome to Marketplace, {session?.user?.name}
         </h1>
-        <div className="shadow-lg w-full min-h-screen p-6 mx-1 bg-zinc-300/10 flex flex-col gap-4 my-6">
+        <div className="shadow-lg w-full min-h-screen p-6 mx-1 bg-zinc-300/10 flex flex-col gap-4 ">
           <h2 className="font-bold text-xl">Explore the Market,</h2>
           {products.length > 0 ? (
-            <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            <motion.div
+              key={products.length}
+              variants={parentVariants}
+              initial="hidden"
+              animate="show"
+              className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+            >
               {products.map((product) => (
                 <motion.button
                   key={product._id}
                   layoutId={`card-${product._id}`}
-                  className="bg-white p-4 border rounded shadow flex flex-col gap-3 cursor-pointer"
+                  variants={childrenVariants}
+                  className="bg-white-100 p-4  rounded-lg shadow-lg border border-blue-100 shadow-gray-100 flex flex-col gap-3 cursor-pointer"
                   onClick={() => setCurrent(product)}
                 >
                   {product.product_image && (
@@ -222,7 +253,7 @@ const Marketplace = () => {
                   </div>
                 </motion.button>
               ))}
-            </div>
+            </motion.div>
           ) : (
             <div className="">No product to show...</div>
           )}

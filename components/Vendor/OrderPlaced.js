@@ -5,7 +5,30 @@ import Image from "next/image";
 
 const OrderPlaced = () => {
   const [orders, setOrders] = useState([]);
-
+  const parentVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.25,
+        delayChildren: 0.1,
+        ease: "easeOut"
+      }
+    }
+  };
+  const childrenVariants = {
+    hidden: {
+      opacity: 0,
+      y: 20,
+      scale: 0.95
+    },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.3, ease: "easeOut" }
+    }
+  };
   //Loading the orders placed by the customers to the vendor
   useEffect(() => {
     const loadOrders = async () => {
@@ -48,14 +71,23 @@ const OrderPlaced = () => {
   };
 
   return (
-    <div className="w-full flex relative">
-      <div className="w-full min-h-screen flex flex-col bg-gray-100 rounded-xl mx-2 my-2 px-2 py-2 gap-4">
-        <h2 className="font-bold text-xl px-2">Manage Orders</h2>
-        <motion.div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <div className="w-full flex flex-col  relative">
+      <h2 className="font-bold text-2xl px-4 py-2  bg-blue-600 text-white">
+        Manage Orders
+      </h2>
+      <div className="w-full min-h-screen flex flex-col bg-gray-100 rounded-xl mx-1 my-2 px-2 py-2 gap-4">
+        <motion.div
+          key={orders.length}
+          variants={parentVariants}
+          initial="hidden"
+          animate="show"
+          className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+        >
           {orders.length > 0 ? (
             orders.map((order) => (
               <motion.div
                 key={order._id}
+                variants={childrenVariants}
                 className="bg-white shadow rounded-lg p-4 flex flex-col gap-3"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -115,13 +147,17 @@ const OrderPlaced = () => {
                     onChange={(e) => updateStatus(order._id, e.target.value)}
                     className="border rounded px-2 py-1 text-sm w-full md:w-auto"
                   >
-                    {["Pending", "Confirmed", "Shipped", "Delivered"].map(
-                      (status) => (
-                        <option key={status} value={status}>
-                          {status}
-                        </option>
-                      )
-                    )}
+                    {[
+                      "Pending",
+                      "Confirmed",
+                      "Shipped",
+                      "Delivered",
+                      "Cancelled"
+                    ].map((status) => (
+                      <option key={status} value={status}>
+                        {status}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </motion.div>
