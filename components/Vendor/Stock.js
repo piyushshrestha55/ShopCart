@@ -1,11 +1,35 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { motion } from "motion/react";
 
 const Stock = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const parentVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.25,
+        delayChildren: 0.1,
+        ease: "easeOut"
+      }
+    }
+  };
+  const childrenVariants = {
+    hidden: {
+      opacity: 0,
+      y: 20,
+      scale: 0.95
+    },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.3, ease: "easeOut" }
+    }
+  };
   useEffect(() => {
     const loadProducts = async () => {
       try {
@@ -53,14 +77,23 @@ const Stock = () => {
   };
 
   return (
-    <div className="w-full min-h-screen p-6">
-      <h1 className="text-2xl font-bold mb-6">Manage Inventory</h1>
+    <div className="w-full min-h-screen ">
+      <h1 className="text-2xl font-bold  px-3 py-2 bg-blue-600 text-white">
+        Manage Inventory
+      </h1>
       {products.length === 0 ? (
         <p>No products found</p>
       ) : (
-        <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <motion.div
+          key={products.length}
+          variants={parentVariants}
+          initial="hidden"
+          animate="show"
+          className="m-6 grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+        >
           {products.map((product) => (
-            <div
+            <motion.div
+              variants={childrenVariants}
               key={product._id}
               className="bg-white p-4 border rounded shadow flex flex-col gap-3"
             >
@@ -102,9 +135,9 @@ const Stock = () => {
                   {loading ? "Saving..." : "Save"}
                 </button>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       )}
     </div>
   );
