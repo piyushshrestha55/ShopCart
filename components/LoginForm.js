@@ -37,7 +37,7 @@ const LoginForm = () => {
             name="email"
             type="text"
             placeholder="Email"
-            autoComplete="email"
+            autoComplete="current-email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -45,7 +45,7 @@ const LoginForm = () => {
             name="password"
             type="password"
             placeholder="Password"
-            autoComplete="password"
+            autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
