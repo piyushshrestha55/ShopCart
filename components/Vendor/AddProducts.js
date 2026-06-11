@@ -122,29 +122,31 @@ const AddProducts = () => {
       </h1>
       <div className="bg-gray-100 mx-4 p-4 rounded-lg mb-8">
         <h2 className="text-xl font-semibold mb-4">Add New Product</h2>
-        <form onSubmit={handleAddProduct}>
+        <form onSubmit={handleAddProduct} className="space-y-3">
           <input
             type="text"
             name="name"
             placeholder="Product Name"
             value={formData.name}
             onChange={handleInputChange}
-            className="block w-full mb-2 p-2 border rounded"
+            className="block w-full p-3 border rounded text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          <input
-            type="number"
-            name="price"
-            placeholder="Price"
-            value={formData.price}
-            onChange={handleInputChange}
-            className="block w-full mb-2 p-2 border rounded"
-          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <input
+              type="number"
+              name="price"
+              placeholder="Price"
+              value={formData.price}
+              onChange={handleInputChange}
+              className="block w-full p-3 border rounded text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
           <textarea
             name="description"
             placeholder="Description"
             value={formData.description}
             onChange={handleInputChange}
-            className="block w-full mb-2 p-2 border rounded"
+            className="block w-full mb-2 p-3 border rounded text-base focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-24"
           />
 
           {/* Image Upload Input */}
@@ -156,13 +158,13 @@ const AddProducts = () => {
               type="file"
               accept="image/*"
               onChange={handleImageChange}
-              className="block w-full mb-2 p-2 border rounded"
+              className="block w-full mb-2 p-3 border rounded text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {imagePreview && (
               <img
                 src={imagePreview}
                 alt="Preview"
-                className="h-32 w-32 object-cover rounded mb-2"
+                className="h-32 w-32 sm:h-40 sm:w-40 object-cover rounded mb-2"
               />
             )}
           </div>
@@ -170,7 +172,7 @@ const AddProducts = () => {
           <button
             value={"Submit"}
             disabled={loading}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:bg-gray-400"
+            className="w-full bg-blue-500 text-white px-4 py-3 rounded font-semibold hover:bg-blue-600 disabled:bg-gray-400 transition"
           >
             {loading ? "Adding..." : "Add Product"}
           </button>

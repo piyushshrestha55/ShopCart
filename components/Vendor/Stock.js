@@ -116,21 +116,21 @@ const Stock = () => {
               <p className="text-sm text-gray-700">{product.product_des}</p>
 
               {/* Stock input */}
-              <div className="flex items-center gap-2 mt-2">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mt-2">
                 <input
                   type="number"
                   value={product.stock ?? 0}
                   onChange={(e) =>
                     handleStockChange(product._id, Number(e.target.value))
                   }
-                  className="w-24 p-2 border rounded"
+                  className="flex-1 sm:w-24 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Stock"
                 />
 
                 <button
                   onClick={() => saveStock(product._id, Number(product.stock))}
                   disabled={loading}
-                  className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 disabled:bg-gray-400"
+                  className="bg-blue-500 text-white px-4 py-2 rounded font-semibold hover:bg-blue-600 disabled:bg-gray-400 transition"
                 >
                   {loading ? "Saving..." : "Save"}
                 </button>
