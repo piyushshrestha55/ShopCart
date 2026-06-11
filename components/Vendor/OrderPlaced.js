@@ -75,7 +75,7 @@ const OrderPlaced = () => {
       <h2 className="font-bold text-2xl px-4 py-2  bg-blue-600 text-white">
         Manage Orders
       </h2>
-      <div className="w-full min-h-screen flex flex-col bg-gray-100 rounded-xl mx-1 my-2 px-2 py-2 gap-4">
+      <div className="w-full min-h-screen flex flex-col bg-gray-100 rounded-xl md:mx-2 my-2 px-2 py-2 gap-4">
         <motion.div
           key={orders.length}
           variants={parentVariants}
@@ -141,11 +141,11 @@ const OrderPlaced = () => {
                     {order.status}
                   </span>
                 </p>
-                <div className="mt-2">
+                <div className="mt-2 w-full">
                   <select
                     value={order.status}
                     onChange={(e) => updateStatus(order._id, e.target.value)}
-                    className="border rounded px-2 py-1 text-sm w-full md:w-auto"
+                    className="border rounded px-3 py-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     {[
                       "Pending",

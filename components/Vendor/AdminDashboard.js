@@ -26,9 +26,11 @@ const AdminDashboard = ({ name }) => {
   }, []);
 
   return (
-    <div className="min-h-screen w-screen flex items-start relative">
+    <div className="min-h-screen flex flex-col md:flex-row items-start relative">
       <SideBar />
-      <div className="w-full min-h-screen flex flex-col ">
+
+      <div className="w-full md:flex-1 md:min-w-0 min-h-screen flex flex-col overflow-x-hidden">
+
         <h1 className="bg-blue-500 text-2xl font-bold px-4 py-2 text-white">
           Welcome to Dashboard, {name}
         </h1>

@@ -11,7 +11,7 @@ const Order = async () => {
     redirect("/");
   }
   return (
-    <div className="w-screen min-h-screen flex relative items-start">
+    <div className="min-h-screen w-full flex flex-col md:flex-row items-start relative">
       <SideBar />
       {session.user.role === "Vendor" ? <OrderPlaced /> : <OrderStatus />}
     </div>

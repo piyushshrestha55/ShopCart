@@ -114,7 +114,7 @@ const Marketplace = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex relative items-start">
+    <div className="min-h-screen w-full flex flex-col md:flex-row items-start relative ">
       {current && (
         <div className="fixed z-10 w-full h-full inset-0 bg-black/50 backdrop-blur-sm"></div>
       )}

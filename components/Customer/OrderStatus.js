@@ -89,7 +89,7 @@ const OrderStatus = () => {
       <h2 className="font-bold text-2xl px-4 py-2 bg-blue-600 text-white">
         Manage Orders
       </h2>
-      <div className="w-full min-h-screen flex flex-col bg-gray-100 rounded-xl mx-2 my-2  gap-5">
+      <div className="w-full min-h-screen flex flex-col bg-gray-100 rounded-xl md:mx-2 my-2  gap-5">
         <motion.div
           key={orders.length}
           variants={parentVariants}
