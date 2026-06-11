@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { Order } from "@/models/Order";
 import mongoose from "mongoose";
 import connectDB from "@/lib/connectDB";
+import { Product } from "@/models/Product";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 export async function PUT(req, context) {
@@ -24,7 +25,11 @@ export async function PUT(req, context) {
         { status: 404 }
       );
     }
-
+    if (status === "Cancelled") {
+      await Product.findByIdAndUpdate(updatedOrder.product_id, {
+        $inc: { stock: updatedOrder.quantity }
+      });
+    }
     return NextResponse.json({ order: updatedOrder }, { status: 200 });
   } catch (err) {
     console.error("Error updating status:", err);

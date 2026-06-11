@@ -99,6 +99,9 @@ export async function PUT(req) {
   if (!updatedOrder) {
     return NextResponse.json({ error: "Order not found" }, { status: 404 });
   }
-
+  // Restore product stock
+  await Product.findByIdAndUpdate(updatedOrder.product_id, {
+    $inc: { stock: updatedOrder.quantity }
+  });
   return NextResponse.json({ order: updatedOrder }, { status: 200 });
 }
