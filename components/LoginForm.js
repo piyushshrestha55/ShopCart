@@ -37,6 +37,7 @@ const LoginForm = () => {
             name="email"
             type="text"
             placeholder="Email"
+            autoComplete="current-email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
@@ -45,6 +46,7 @@ const LoginForm = () => {
             name="password"
             type="password"
             placeholder="Password"
+            autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"

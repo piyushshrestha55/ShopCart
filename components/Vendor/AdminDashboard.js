@@ -28,14 +28,16 @@ const AdminDashboard = ({ name }) => {
   return (
     <div className="min-h-screen flex flex-col md:flex-row items-start relative">
       <SideBar />
+
       <div className="w-full md:flex-1 md:min-w-0 min-h-screen flex flex-col overflow-x-hidden">
+
         <h1 className="bg-blue-500 text-2xl font-bold px-4 py-2 text-white">
           Welcome to Dashboard, {name}
         </h1>
 
-        <StatsCards className="w-full" products={products} orders={orders} />
-        <RevenueChart className="w-full" orders={orders} />
-        <TopProducts className="w-full" orders={orders} />
+        <StatsCards products={products} orders={orders} />
+        <RevenueChart orders={orders} />
+        <TopProducts orders={orders} />
         <OrdersPreview orders={orders} />
       </div>
     </div>
