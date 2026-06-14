@@ -18,7 +18,7 @@ const OrdersPreview = ({ orders = [] }) => {
   return (
     <div className="bg-white shadow rounded p-6 mt-8">
       <h2 className="text-lg font-semibold mb-4">Recent Orders</h2>
-      <table className="min-w-full border border-gray-300">
+      <table className="min-w-full border border-gray-300 px-2">
         <thead>
           <tr>
             <th className="border border-gray-300 px-4 py-2">Customer</th>

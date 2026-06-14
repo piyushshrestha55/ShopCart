@@ -8,9 +8,11 @@ const User_Profile = () => {
   if (!session) return <div>Please log in</div>;
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <div className="bg-white rounded-lg shadow p-6">
-        <h1 className="text-2xl font-bold mb-4">Profile</h1>
+    <div className="w-full md:flex-1 md:min-w-0 min-h-screen flex flex-col overflow-x-hidden">
+      <h1 className="text-2xl font-bold mb-4 w-ful py-2 px-3w-full md:flex-1 md:min-w-0 min-h-screen flex flex-col overflow-x-hidden bg-blue-600 text-white">
+        Profile
+      </h1>
+      <div className="bg-white rounded-lg shadow mx-2 p-4">
         <p className="text-lg">
           <strong>Name:</strong> {session.user?.name}
         </p>
